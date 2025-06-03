@@ -1,10 +1,11 @@
 import requests
-from utils.env_config import config
 from utils.gcp import get_secret
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+FUDO_AUTH_URL = "https://auth.fu.do/api"
+FUDO_API_URL = "https://api.fu.do/v1alpha1"
 
 def get_token():
     """Obtiene el token de autenticación desde la API de Fudo."""
@@ -15,7 +16,7 @@ def get_token():
         payload = {"apiKey": api_key, "apiSecret": api_secret}
         headers = {"Content-Type": "application/json"}
 
-        response = requests.post(config.FUDO_AUTH_URL, json=payload, headers=headers)
+        response = requests.post(FUDO_AUTH_URL, json=payload, headers=headers)
         response.raise_for_status()
 
         token = response.json().get("token")
@@ -48,7 +49,7 @@ def get_fudo_data(token, endpoint, page_size=500, page_number=1, extra_params=No
     Returns:
         list: Lista de resultados.
     """
-    url = f"{config.FUDO_API_URL}{endpoint}"
+    url = f"{FUDO_API_URL}{endpoint}"
     headers = {"Authorization": f"Bearer {token}"}
     data = []
 
