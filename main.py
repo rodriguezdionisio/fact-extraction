@@ -25,7 +25,7 @@ def run_extract(endpoint, folder, filename, date_column):
 if __name__ == "__main__":
     tasks = [
         ("/sales", "fact_sales", "fact_sales", "attributes.createdAt"),
-        ("/items", "fact_sales_orders", "fact_sales_orders", "attributes.createdAt")  
+        ("/items", "fact_sales_orders", "fact_sales_orders", "attributes.createdAt")
         ]
 
     for endpoint, folder, filename, date_column in tasks:
