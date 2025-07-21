@@ -4,7 +4,7 @@ steps:
     args: [
       'build',
       '-t',
-      'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-gcs-cloudrun',
+      'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-cloudrun',
       '.'
     ]
 
@@ -12,11 +12,11 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-gcs-cloudrun'
+      'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-cloudrun'
     ]
 
 images:
-  - 'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-gcs-cloudrun'
+  - 'us-east1-docker.pkg.dev/$PROJECT_ID/resto-backend/fact-extraction-cloudrun'
 
 options:
   logging: CLOUD_LOGGING_ONLY
