@@ -60,12 +60,24 @@ def get_from_fudo(token, endpoint, start_page, end_page, page_size=500):
     df = pd.json_normalize(all_data)
     return df
 
-def group_by_day(df, date_column="attributes.createdAt"):
+def group_by_day(df: pd.DataFrame, date_column: str = "attributes.createdAt") -> dict:
     """
-    Agrupa un dataframe por fecha, asumiendo que `date_column` está en formato datetime.
+    Agrupa un dataframe por día sin modificar la columna de fecha original.
+
+    Args:
+        df (pd.DataFrame): El DataFrame a procesar.
+        date_column (str): El nombre de la columna con la fecha en formato string.
+
+    Returns:
+        dict: Un diccionario donde cada clave es una fecha (date object) y
+              cada valor es un DataFrame con los datos de ese día.
     """
-    df[date_column] = pd.to_datetime(df[date_column]).dt.date
-    return dict(tuple(df.groupby(date_column)))
+    # 1. Crea una clave de agrupación a partir de la columna de fecha
+    #    sin modificar el DataFrame original.
+    grouping_key = pd.to_datetime(df[date_column]).dt.date
+    
+    # 2. Agrupa el DataFrame original usando la clave externa y lo convierte a diccionario.
+    return dict(tuple(df.groupby(grouping_key)))
 
 def save_on_gcs(df_day, date, bucket_name, folder_prefix, filename, id_col="id"):
     """
